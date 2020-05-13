@@ -1,0 +1,31 @@
+[
+    {
+        "url": "\/",
+        "title": "Home",
+        "active": false,
+        "attributes": [],
+        "children": []
+    },
+    {
+        "url": "\/blog",
+        "title": "Blog",
+        "active": true,
+        "attributes": [],
+        "children": [
+            {
+                "url": "\/blog",
+                "title": "All posts",
+                "active": true,
+                "attributes": [],
+                "children": []
+            },
+            {
+                "url": "\/blog\/topics",
+                "title": "Topics",
+                "active": true,
+                "attributes": [],
+                "children": []
+            }
+        ]
+    }
+]
