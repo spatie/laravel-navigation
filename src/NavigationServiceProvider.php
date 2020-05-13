@@ -4,7 +4,6 @@ namespace Spatie\Navigation;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
-use Spatie\Navigation\Navigation;
 
 class NavigationServiceProvider extends ServiceProvider
 {
