@@ -25,11 +25,10 @@ class BreadcrumbsRenderer
 
         $breadcrumbs = [$activeSection];
 
-        while (!in_array($breadcrumbs[0], $this->navigation->children, true)) {
-
+        while (! in_array($breadcrumbs[0], $this->navigation->children, true)) {
             $parent = $this->findParent($breadcrumbs[0], $this->navigation->children);
 
-            if (!$parent) {
+            if (! $parent) {
                 throw new RuntimeException("Should never happen");
             }
 
