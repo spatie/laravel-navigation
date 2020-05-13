@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "url": "\/blog",
+        "title": "Blog",
+        "attributes": []
+    },
+    {
+        "url": "\/blog\/topics",
+        "title": "Topics",
+        "attributes": []
+    }
+]

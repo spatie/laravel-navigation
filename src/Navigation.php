@@ -9,7 +9,7 @@ use Spatie\Navigation\Renderers\TreeRenderer;
 
 class Navigation
 {
-    use HasChildSections;
+    use HasChildren;
 
     private ActiveUrlChecker $activeUrlChecker;
 

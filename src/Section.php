@@ -4,7 +4,7 @@ namespace Spatie\Navigation;
 
 class Section
 {
-    use HasChildSections;
+    use HasChildren;
 
     public string $url;
 

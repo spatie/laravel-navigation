@@ -2,7 +2,7 @@
 
 namespace Spatie\Navigation;
 
-trait HasChildSections
+trait HasChildren
 {
     /** @var Section[] */
     public array $children;
