@@ -8,12 +8,12 @@ class ActiveUrlChecker
 {
     private string $requestUrl;
 
-    private string $rootUrl;
+    private string $rootPath;
 
-    public function __construct(string $requestUrl, string $rootUrl)
+    public function __construct(string $requestUrl, string $rootPath = '/')
     {
         $this->requestUrl = $requestUrl;
-        $this->rootUrl = $rootUrl;
+        $this->rootPath = $rootPath;
     }
 
     public function check(string $url): bool
@@ -26,26 +26,26 @@ class ActiveUrlChecker
             return false;
         }
 
-        $rootUrl = Str::ensureLeft('/', $this->rootUrl);
+        $rootPath = Str::ensureLeft('/', $this->rootPath);
 
         // All paths used in this method should be terminated by a /
         // otherwise startsWith at the end will be too greedy and
         // also matches items which are on the same level
-        $rootUrl = Str::ensureRight('/', $rootUrl);
+        $rootPath = Str::ensureRight('/', $rootPath);
 
         $itemPath = Str::ensureRight('/', $url->getPath());
 
-        // If this url doesn't start with the rootUrl, it's inactive.
-        if (! Str::startsWith($itemPath, $rootUrl)) {
+        // If this url doesn't start with the rootPath, it's inactive.
+        if (! Str::startsWith($itemPath, $rootPath)) {
             return false;
         }
 
         $matchPath = Str::ensureRight('/', $requestUrl->getPath());
 
         // For the next comparisons we just need the paths, and we'll remove
-        // the rootUrl first.
-        $itemPath = Str::removeFromStart($rootUrl, $itemPath);
-        $matchPath = Str::removeFromStart($rootUrl, $matchPath);
+        // the rootPath first.
+        $itemPath = Str::removeFromStart($rootPath, $itemPath);
+        $matchPath = Str::removeFromStart($rootPath, $matchPath);
 
         // If this url starts with the url we're matching with, it's active.
         if ($matchPath === $itemPath || Str::startsWith($matchPath, $itemPath)) {
