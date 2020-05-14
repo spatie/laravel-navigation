@@ -17,13 +17,13 @@
     ],
     "require": {
         "php": "^7.4",
-        "spatie/phpunit-snapshot-assertions": "^4.2",
         "spatie/url": "^1.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "orchestra/testbench": "^5.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0",
+        "spatie/phpunit-snapshot-assertions": "^4.2"
     },
     "autoload": {
         "psr-4": {
