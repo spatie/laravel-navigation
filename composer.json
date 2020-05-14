@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-navigation",
-    "description": "Manage menus, breadcrums, and other navigational elements in Laravel apps",
+    "description": "Manage menus, breadcrumbs, and other navigational elements in Laravel apps",
     "keywords": [
         "spatie",
         "laravel-navigation"
