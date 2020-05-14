@@ -4,7 +4,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-navigation/run-tests?label=tests)](https://github.com/spatie/laravel-navigation/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-navigation.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-navigation)
 
-*Work in progress!*
+*Work in progress! Things will probably change. Questions and contributions might not be addressed.*
 
 Laravel Navigation is meant to be the spiritual successor of [Laravel Menu](https://github.com/spatie/laravel-menu). Laravel Menu will still be actively maintained, but there are a few principal differences between the two packages.
 
