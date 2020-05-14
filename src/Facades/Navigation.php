@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Navigation;
+namespace Spatie\Navigation\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
