@@ -47,6 +47,15 @@ class NavigationTest extends TestCase
         $this->assertMatchesJsonSnapshot($this->navigation->tree());
     }
 
+    public function test_doesnt_render_hidden_items_in_a_tree()
+    {
+        $this->assertMatchesJsonSnapshot(
+            $this->navigation
+                ->add('Hidden', '/', fn (Section $section) => $section->hide())
+                ->tree()
+        );
+    }
+
     public function test_it_can_render_breadcrumbs()
     {
         $this->assertMatchesJsonSnapshot($this->navigation->breadcrumbs());

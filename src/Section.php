@@ -10,6 +10,8 @@ class Section
 
     public string $title;
 
+    public bool $visible;
+
     /** @var string[] */
     public array $attributes;
 
@@ -18,13 +20,29 @@ class Section
         $this->title = $title;
         $this->url = $url;
 
-        $this->children = [];
+        $this->visible = true;
         $this->attributes = [];
+
+        $this->children = [];
     }
 
     public function attributes(array $attributes): self
     {
         $this->attributes = array_merge($this->attributes, $attributes);
+
+        return $this;
+    }
+
+    public function show(bool $visible = true): self
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function hide(bool $hidden = true): self
+    {
+        $this->visible = ! $hidden;
 
         return $this;
     }
