@@ -24,9 +24,9 @@ class TreeRenderer
      */
     private function renderSections(array $sections): array
     {
-        $visibleSections = array_filter($sections, function (Section $section) {
+        $visibleSections = array_values(array_filter($sections, function (Section $section) {
             return $section->visible;
-        });
+        }));
 
         return array_map(function (Section $section) {
             return [
