@@ -77,6 +77,6 @@ class Section implements Node
             return [];
         }
 
-        return array_merge([$this->parent->getParents(), $this->parent]);
+        return array_merge($this->parent->getParents(), [$this->parent]);
     }
 }

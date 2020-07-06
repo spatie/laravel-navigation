@@ -52,7 +52,7 @@ class Navigation implements Node
 
         return collect($activeSections)
             ->sortByDesc(function (Section $section) {
-                return count(explode('/', preg_replace('/^https?:\/\//', '', $section->url)));
+                return count($section->getParents());
             })
             ->first();
     }
