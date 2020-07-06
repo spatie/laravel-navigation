@@ -17,9 +17,9 @@ class BreadcrumbsRenderer
 
     public function render(): array
     {
-        try {
-            $activeSection = $this->navigation->activeSection();
-        } catch (RuntimeException $exception) {
+        $activeSection = $this->navigation->activeSection();
+
+        if (! $activeSection) {
             return [];
         }
 

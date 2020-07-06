@@ -25,15 +25,17 @@ class Navigation
         return $this->activeUrlChecker->check($section->url);
     }
 
-    public function activeSection(): Section
+    public function activeSection(): ?Section
     {
-        return collect($this->filter([$this, 'isActive']))
+        $activeSections = $this->filter(function (Section $section) {
+            return $this->activeUrlChecker->check($section->url);
+        });
+
+        return collect($activeSections)
             ->sortByDesc(function (Section $section) {
                 return count(explode('/', preg_replace('/^https?:\/\//', '', $section->url)));
             })
-            ->first(null, function () {
-                throw new RuntimeException("No active section was found");
-            });
+            ->first();
     }
 
     public function filter(callable $callback): array

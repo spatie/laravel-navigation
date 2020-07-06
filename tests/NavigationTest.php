@@ -32,14 +32,17 @@ class NavigationTest extends TestCase
 
     public function test_it_can_get_the_active_section()
     {
-        $this->assertEquals('Topics', $this->navigation->activeSection()->title);
+        $activeSection = $this->navigation->activeSection();
+
+        $this->assertNotNull($activeSection);
+        $this->assertEquals('Topics', $activeSection->title);
     }
 
-    public function test_it_throws_a_runtime_exception_when_there_is_no_active_section()
+    public function test_it_returns_null_when_there_is_no_active_section()
     {
-        $this->expectException(RuntimeException::class);
+        $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();
 
-        (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();
+        $this->assertNull($activeSection);
     }
 
     public function test_it_can_render_a_tree()
