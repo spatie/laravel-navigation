@@ -2,16 +2,16 @@
 
 namespace Spatie\Navigation;
 
-use RuntimeException;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Renderers\BreadcrumbsRenderer;
 use Spatie\Navigation\Renderers\TreeRenderer;
 
-class Navigation
+class Navigation implements Node
 {
-    use HasChildren;
-
     private ActiveUrlChecker $activeUrlChecker;
+
+    /** @var Section[] */
+    public array $children;
 
     public function __construct(ActiveUrlChecker $activeUrlChecker)
     {
@@ -20,9 +20,28 @@ class Navigation
         $this->children = [];
     }
 
+    public function add(string $title = '', string $url = '', ?callable $configure = null): self
+    {
+        $section = new Section($this, $title, $url);
+
+        if ($configure) {
+            $configure($section);
+        }
+
+        $this->children[] = $section;
+
+        return $this;
+    }
+
     public function isActive(Section $section): bool
     {
-        return $this->activeUrlChecker->check($section->url);
+        $activeSection = $this->activeSection();
+
+        if (! $activeSection) {
+            return false;
+        }
+
+        return in_array($section, array_merge([$activeSection], $activeSection->getParents()));
     }
 
     public function activeSection(): ?Section
@@ -68,5 +87,16 @@ class Navigation
     public function breadcrumbs(): array
     {
         return (new BreadcrumbsRenderer($this))->render();
+    }
+
+    public function getParent(): ?Node
+    {
+        return null;
+    }
+
+    /** @return Node[] */
+    public function getParents(): array
+    {
+        return [];
     }
 }

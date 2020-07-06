@@ -2,9 +2,9 @@
 
 namespace Spatie\Navigation;
 
-class Section
+class Section implements Node
 {
-    use HasChildren;
+    public Node $parent;
 
     public string $url;
 
@@ -12,11 +12,16 @@ class Section
 
     public bool $visible;
 
+    /** @var Section[] */
+    public array $children;
+
     /** @var string[] */
     public array $attributes;
 
-    public function __construct(string $title = '', string $url = '')
+    public function __construct(Node $parent, string $title = '', string $url = '')
     {
+        $this->parent = $parent;
+
         $this->title = $title;
         $this->url = $url;
 
@@ -24,6 +29,19 @@ class Section
         $this->attributes = [];
 
         $this->children = [];
+    }
+
+    public function add(string $title = '', string $url = '', ?callable $configure = null): self
+    {
+        $section = new Section($this, $title, $url);
+
+        if ($configure) {
+            $configure($section);
+        }
+
+        $this->children[] = $section;
+
+        return $this;
     }
 
     public function attributes(array $attributes): self
@@ -45,5 +63,20 @@ class Section
         $this->visible = ! $hidden;
 
         return $this;
+    }
+
+    public function getParent(): ?Node
+    {
+        return $this->parent;
+    }
+
+    /** @return Node[] */
+    public function getParents(): array
+    {
+        if (! $this->parent) {
+            return [];
+        }
+
+        return array_merge([$this->parent->getParents(), $this->parent]);
     }
 }

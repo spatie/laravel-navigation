@@ -3,7 +3,6 @@
 namespace Spatie\Navigation\Test;
 
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Navigation;
 use Spatie\Navigation\Section;
@@ -19,14 +18,14 @@ class NavigationTest extends TestCase
 
     public function setUp(): void
     {
-        $this->activeUrlChecker = new ActiveUrlChecker('/blog/topics/laravel', '/');
+        $this->activeUrlChecker = new ActiveUrlChecker('/topics/laravel', '/');
 
         $this->navigation = (new Navigation($this->activeUrlChecker))
             ->add('Home', '/')
-            ->add('Blog', '/blog', function (Section $section) {
+            ->add('Blog', '/posts', function (Section $section) {
                 $section
-                    ->add('All posts', '/blog')
-                    ->add('Topics', '/blog/topics');
+                    ->add('All posts', '/posts')
+                    ->add('Topics', '/topics');
             });
     }
 
@@ -47,12 +46,12 @@ class NavigationTest extends TestCase
 
     public function test_it_can_render_a_tree()
     {
-        $this->assertMatchesJsonSnapshot($this->navigation->tree());
+        $this->assertMatchesSnapshot($this->navigation->tree());
     }
 
     public function test_doesnt_render_hidden_items_in_a_tree()
     {
-        $this->assertMatchesJsonSnapshot(
+        $this->assertMatchesSnapshot(
             $this->navigation
                 ->add('Hidden', '/', fn (Section $section) => $section->hide())
                 ->tree()
@@ -61,6 +60,6 @@ class NavigationTest extends TestCase
 
     public function test_it_can_render_breadcrumbs()
     {
-        $this->assertMatchesJsonSnapshot($this->navigation->breadcrumbs());
+        $this->assertMatchesSnapshot($this->navigation->breadcrumbs());
     }
 }

@@ -1,0 +1,8 @@
+-
+    url: /posts
+    title: Blog
+    attributes: {  }
+-
+    url: /topics
+    title: Topics
+    attributes: {  }
