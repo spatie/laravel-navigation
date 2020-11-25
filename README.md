@@ -1,7 +1,7 @@
 # Manage menus, breadcrumbs, and other navigational elements in Laravel apps
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-navigation.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-navigation)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-navigation/run-tests?label=tests)](https://github.com/spatie/laravel-navigation/actions?query=workflow%3Arun-tests+branch%3Amaster)
+![run-tests](https://github.com/spatie/laravel-navigation/workflows/run-tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-navigation.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-navigation)
 
 *Work in progress! Things will probably change. Questions and contributions might not be addressed.*
@@ -98,7 +98,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security
 
