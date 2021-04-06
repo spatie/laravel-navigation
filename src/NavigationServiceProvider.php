@@ -9,8 +9,8 @@ class NavigationServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(ActiveUrlChecker::class, function () {
-            return new ActiveUrlChecker($this->app->request->url());
+        $this->app->singleton(ActiveUrlChecker::class, function ($app) {
+            return new ActiveUrlChecker($app->request->url());
         });
 
         $this->app->singleton(Navigation::class);
