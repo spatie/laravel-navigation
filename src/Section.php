@@ -2,8 +2,12 @@
 
 namespace Spatie\Navigation;
 
+use Spatie\Navigation\Traits\Conditions as ConditionsTrait;
+
 class Section implements Node
 {
+    use ConditionsTrait;
+
     public Node $parent;
 
     public string $url;
@@ -40,6 +44,15 @@ class Section implements Node
         }
 
         $this->children[] = $section;
+
+        return $this;
+    }
+
+    public function addIf($condition, string $title = '', string $url = '', ?callable $configure = null): self
+    {
+        if ($this->resolveCondition($condition)) {
+            $this->add($title, $url, $configure);
+        }
 
         return $this;
     }

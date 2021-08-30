@@ -5,9 +5,12 @@ namespace Spatie\Navigation;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Renderers\BreadcrumbsRenderer;
 use Spatie\Navigation\Renderers\TreeRenderer;
+use Spatie\Navigation\Traits\Conditions as ConditionsTrait;
 
 class Navigation implements Node
 {
+    use ConditionsTrait;
+
     private ActiveUrlChecker $activeUrlChecker;
 
     /** @var Section[] */
@@ -29,6 +32,15 @@ class Navigation implements Node
         }
 
         $this->children[] = $section;
+
+        return $this;
+    }
+
+    public function addIf($condition, string $title = '', string $url = '', ?callable $configure = null): self
+    {
+        if ($this->resolveCondition($condition)) {
+            $this->add($title, $url, $configure);
+        }
 
         return $this;
     }

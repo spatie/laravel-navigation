@@ -62,4 +62,28 @@ class NavigationTest extends TestCase
     {
         $this->assertMatchesSnapshot($this->navigation->breadcrumbs());
     }
+
+    public function test_item_added_with_true_condition()
+    {
+        $before = clone $this->navigation;
+        $this->navigation->addIf(true, 'Team', '/team');
+        $this->assertNotEquals($before, $this->navigation);
+
+    }
+
+    public function test_item_not_added_with_false_condition()
+    {
+        $before = clone $this->navigation;
+        $this->navigation->addIf(false, 'Team', '/team');
+        $this->assertEquals($before, $this->navigation);
+
+    }
+
+    public function test_section_added_with_true_condition()
+    {
+        $before = clone $this->navigation;
+        $this->navigation->add('Team', '/team', fn (Section $section) =>
+            $section->addIf(true, 'Switch', 'team/switch'));
+        $this->assertNotEquals($before, $this->navigation);
+    }
 }
