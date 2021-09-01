@@ -4,7 +4,7 @@ namespace Spatie\Navigation\Traits;
 
 trait Conditions
 {
-    protected function resolveCondition(mixed $conditional): mixed
+    protected function resolveCondition($conditional)
     {
         return is_callable($conditional) ? $conditional() : $conditional;
     }
