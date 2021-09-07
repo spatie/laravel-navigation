@@ -9,4 +9,3 @@ trait Conditions
         return is_callable($conditional) ? $conditional() : $conditional;
     }
 }
-

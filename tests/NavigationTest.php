@@ -68,7 +68,6 @@ class NavigationTest extends TestCase
         $before = clone $this->navigation;
         $this->navigation->addIf(true, 'Team', '/team');
         $this->assertNotEquals($before, $this->navigation);
-
     }
 
     public function test_item_not_added_with_false_condition()
@@ -76,7 +75,6 @@ class NavigationTest extends TestCase
         $before = clone $this->navigation;
         $this->navigation->addIf(false, 'Team', '/team');
         $this->assertEquals($before, $this->navigation);
-
     }
 
     public function test_section_added_with_true_condition()
