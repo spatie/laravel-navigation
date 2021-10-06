@@ -49,6 +49,12 @@ class ActiveUrlChecker
 
         // If this url starts with the url we're matching with, it's active.
         if ($matchPath === $itemPath || Str::startsWith($matchPath, $itemPath)) {
+
+            // Compare section if set
+            if ($requestUrl->getQueryParameter('section')) {
+                return $url->getQueryParameter('section') === $requestUrl->getQueryParameter('section');
+            }
+
             return true;
         }
 

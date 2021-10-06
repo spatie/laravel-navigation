@@ -2,7 +2,9 @@
 
 namespace Spatie\Navigation;
 
+use Spatie\Navigation\Helpers\Str;
 use Spatie\Navigation\Traits\Conditions as ConditionsTrait;
+use Spatie\Url\Url;
 
 class Section implements Node
 {
@@ -74,6 +76,15 @@ class Section implements Node
     public function hide(bool $hidden = true): self
     {
         $this->visible = ! $hidden;
+
+        return $this;
+    }
+
+    public function appendSectionToUrl(): self
+    {
+        if ($this->getParent() && $this->getParent()->title) {
+            $this->url = Url::fromString($this->url)->withQueryParameter('section', \Illuminate\Support\Str::slug($this->getParent()->title));
+        }
 
         return $this;
     }
