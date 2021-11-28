@@ -17,11 +17,11 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "spatie/url": "^1.3|^2.0"
+        "spatie/url": "^1.3.5|^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0",
-        "phpunit/phpunit": "^9.0",
+        "orchestra/testbench": "^5.0|^6.23",
+        "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
     "autoload": {
@@ -36,8 +36,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
