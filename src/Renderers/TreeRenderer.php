@@ -35,6 +35,7 @@ class TreeRenderer
                 'active' => $this->navigation->isActive($section),
                 'attributes' => $section->attributes,
                 'children' => $this->renderSections($section->children),
+                'depth' => $section->getDepth(),
             ];
         }, $visibleSections);
     }

@@ -57,4 +57,12 @@ class SectionTest extends TestCase
         $this->assertArrayHasKey('baz', $section->children[0]->attributes);
         $this->assertEquals('qux', $section->children[0]->attributes['baz']);
     }
+
+    public function test_it_has_depth()
+    {
+        $section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts');
+
+        $this->assertEquals(0, $section->getDepth());
+        $this->assertEquals(1, $section->children[0]->getDepth());
+    }
 }
