@@ -92,4 +92,13 @@ class Section implements Node
 
         return array_merge($this->parent->getParents(), [$this->parent]);
     }
+
+    public function getDepth(): int
+    {
+        if (! $this->parent) {
+            return 0;
+        }
+
+        return count($this->parent->getParents());
+    }
 }
