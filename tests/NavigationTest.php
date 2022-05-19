@@ -39,7 +39,7 @@ class NavigationTest extends TestCase
 
     public function test_it_returns_null_when_there_is_no_active_section()
     {
-        $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', 'home')->activeSection();
+        $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();
 
         $this->assertNull($activeSection);
     }

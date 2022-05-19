@@ -8,6 +8,15 @@ use Spatie\Navigation\Helpers\Str;
 class StrTest extends TestCase
 {
     /** @test * */
+    public function it_can_check_if_string_starts_with()
+    {
+        $this->assertTrue(Str::startsWith('startEnd', 'start'));
+        $this->assertFalse(Str::startsWith('startEnd', 'end'));
+        $this->assertFalse(Str::startsWith('/', '/foo'));
+        $this->assertTrue(Str::startsWith('/foo', '/'));
+    }
+
+    /** @test * */
     public function it_can_remove_from_start()
     {
         $this->assertSame('End', Str::removeFromStart('start', 'startEnd'));
