@@ -3,7 +3,6 @@
 namespace Spatie\Navigation\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Helpers\Str;
 
 class StrTest extends TestCase
