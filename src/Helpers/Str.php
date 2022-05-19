@@ -4,18 +4,9 @@ namespace Spatie\Navigation\Helpers;
 
 class Str
 {
-    public static function startsWith(string $haystack, string $needle): bool
-    {
-        if ($needle != '' && substr($haystack, 0, strlen($needle)) === $needle) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function removeFromStart(string $remove, string $subject): string
     {
-        if (! self::startsWith($subject, $remove)) {
+        if (! str_starts_with($subject, $remove)) {
             return $subject;
         }
 
