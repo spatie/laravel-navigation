@@ -7,8 +7,6 @@
 ![run-tests](https://github.com/spatie/laravel-navigation/workflows/run-tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-navigation.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-navigation)
 
-*Work in progress! Things will probably change. Questions and contributions might not be addressed.*
-
 Laravel Navigation is meant to be the spiritual successor of [Laravel Menu](https://github.com/spatie/laravel-menu). Laravel Menu will still be actively maintained, but there are a few principal differences between the two packages.
 
 The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigation describes an application's navigation tree, which can be used as a base to create navigational elements like menus and breadcrumbs. Laravel Menu has a rich API for HTML generation. Laravel Navigation doesn't do any HTML generation (although we might ship some Blade files in the future). Instead, Laravel Navigation should give you the flexibility to build your own UI without worrying about the complexity of navigation trees and active state. Think of it as a [renderless component](https://adamwathan.me/renderless-components-in-vuejs/).
