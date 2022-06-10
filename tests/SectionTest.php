@@ -58,6 +58,15 @@ class SectionTest extends TestCase
         $this->assertEquals('qux', $section->children[0]->attributes['baz']);
     }
 
+    public function test_attributes_can_be_configured_inline()
+    {
+        $section = (new Section($this->navigation, 'Top level', '/'))
+            ->add('First link', '/link', attributes: ['icon' => 'mdi:link']);
+
+        $this->assertCount(1, $section->children);
+        $this->assertArrayHasKey('icon', $section->children[0]->attributes);
+    }
+
     public function test_it_has_depth()
     {
         $section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts');
