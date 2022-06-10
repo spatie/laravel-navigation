@@ -23,6 +23,11 @@ class Navigation implements Node
         $this->children = [];
     }
 
+    public static function make(): static
+    {
+        return app(static::class);
+    }
+
     public function add(string $title = '', string $url = '', ?callable $configure = null): self
     {
         $section = new Section($this, $title, $url);
