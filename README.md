@@ -12,7 +12,7 @@ Laravel Navigation is meant to be the spiritual successor of [Laravel Menu](http
 The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigation describes an application's navigation tree, which can be used as a base to create navigational elements like menus and breadcrumbs. Laravel Menu has a rich API for HTML generation. Laravel Navigation doesn't do any HTML generation (although we might ship some Blade files in the future). Instead, Laravel Navigation should give you the flexibility to build your own UI without worrying about the complexity of navigation trees and active state. Think of it as a [renderless component](https://adamwathan.me/renderless-components-in-vuejs/).
 
 ```php
-<?php
+// typically, in a service provider
 
 app(Navigation::class)
     ->add('Home', route('home'))
@@ -31,8 +31,6 @@ A navigation object can be rendered to a tree, or to breadcrumbs.
 Some examples when visiting `/blog/topics/laravel`:
 
 ```php
-<?php
-
 // Render to tree
 app(Navigation::class)->tree();
 ```
@@ -54,8 +52,6 @@ app(Navigation::class)->tree();
 ```
 
 ```php
-<?php
-
 // Append additional pages in your controller
 app(Navigation::class)->activeSection()->add($topic->name, route('blog.topics.show', $topic));
 
