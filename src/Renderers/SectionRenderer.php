@@ -7,7 +7,7 @@ use Spatie\Navigation\Section;
 class SectionRenderer
 {
     public function __construct(
-        private ?Section $section
+        protected ?Section $section
     ) {
     }
 
