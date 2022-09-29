@@ -58,7 +58,7 @@ class Navigation implements Node
             return false;
         }
 
-        return in_array($section, array_merge([$activeSection], $activeSection->getParents()));
+        return in_array($section, array_merge([$activeSection], $activeSection->getParents()), true);
     }
 
     public function activeSection(): ?Section
