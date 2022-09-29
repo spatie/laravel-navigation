@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-navigation` will be documented in this file
 
+## 1.1.1 - 2022-09-29
+
+### What's Changed
+
+- Update .gitattributes by @angeljqv in https://github.com/spatie/laravel-navigation/pull/9
+- in_array strict mode by @hopkins385 in https://github.com/spatie/laravel-navigation/pull/17
+
+### New Contributors
+
+- @angeljqv made their first contribution in https://github.com/spatie/laravel-navigation/pull/9
+- @hopkins385 made their first contribution in https://github.com/spatie/laravel-navigation/pull/17
+
+**Full Changelog**: https://github.com/spatie/laravel-navigation/compare/1.1.0...1.1.1
+
 ## 1.1.0 - 2022-06-10
 
 ### What's Changed
