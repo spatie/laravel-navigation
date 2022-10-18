@@ -13,10 +13,10 @@ class SectionRenderer
 
     public function render(): ?array
     {
-        if (!$this->section) {
+        if (! $this->section) {
             return null;
         }
-        
+
         return [
             'url' => $this->section->url,
             'title' => $this->section->title,
