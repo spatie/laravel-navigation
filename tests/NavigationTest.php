@@ -37,6 +37,19 @@ class NavigationTest extends TestCase
         $this->assertEquals('Topics', $activeSection->title);
     }
 
+    public function test_it_can_render_the_active_section()
+    {
+        $this->assertMatchesSnapshot($this->navigation->current());
+    }
+
+    public function test_it_returns_null_when_rendering_an_empty_section()
+    {
+        $navigation =  (new Navigation($this->activeUrlChecker))->add('Home', '/');
+
+        $this->assertNull($navigation->activeSection());
+        $this->assertNull($navigation->current());
+    }
+
     public function test_it_returns_null_when_there_is_no_active_section()
     {
         $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();

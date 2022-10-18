@@ -14,7 +14,7 @@ The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigatio
 ```php
 // typically, in a service provider
 
-app(Navigation::class)
+Navigation::make()
     ->add('Home', route('home'))
     ->add('Blog', route('blog.index'), function (Section $section) {
         $section
@@ -32,7 +32,7 @@ Some examples when visiting `/blog/topics/laravel`:
 
 ```php
 // Render to tree
-app(Navigation::class)->tree();
+Navigation::make()->tree();
 ```
 
 ```json
@@ -53,10 +53,10 @@ app(Navigation::class)->tree();
 
 ```php
 // Append additional pages in your controller
-app(Navigation::class)->activeSection()->add($topic->name, route('blog.topics.show', $topic));
+Navigation::make()->activeSection()->add($topic->name, route('blog.topics.show', $topic));
 
 // Render to breadcrumbs
-app(Navigation::class)->breadcrumbs();
+Navigation::make()->breadcrumbs();
 ```
 
 ```json
@@ -65,6 +65,15 @@ app(Navigation::class)->breadcrumbs();
     { "title": "Topics", "url": "/blog/topics" },
     { "title": "Laravel", "url": "/blog/topics/laravel" }
 ]
+```
+
+```php
+// Render the current section
+Navigation::make()->current();
+```
+
+```json
+{ "title": "Home", "url": "/", "attributes": [] }
 ```
 
 ## Support us

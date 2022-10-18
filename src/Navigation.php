@@ -4,6 +4,7 @@ namespace Spatie\Navigation;
 
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Renderers\BreadcrumbsRenderer;
+use Spatie\Navigation\Renderers\SectionRenderer;
 use Spatie\Navigation\Renderers\TreeRenderer;
 use Spatie\Navigation\Traits\Conditions as ConditionsTrait;
 
@@ -104,6 +105,11 @@ class Navigation implements Node
     public function breadcrumbs(): array
     {
         return (new BreadcrumbsRenderer($this))->render();
+    }
+
+    public function current(): ?array
+    {
+        return (new SectionRenderer($this->activeSection()))->render();
     }
 
     public function getParent(): ?Node
