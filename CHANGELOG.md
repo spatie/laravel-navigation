@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-navigation` will be documented in this file
 
+## 1.2.0 - 2022-10-18
+
+## What's Changed
+
+* feat: support rendering the current section by @innocenzi in https://github.com/spatie/laravel-navigation/pull/13
+
+**Full Changelog**: https://github.com/spatie/laravel-navigation/compare/1.1.1...1.2.0
+
 ## 1.1.1 - 2022-09-29
 
 ### What's Changed
