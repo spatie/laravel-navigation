@@ -94,7 +94,29 @@ class NavigationTest extends TestCase
     {
         $before = clone $this->navigation;
         $this->navigation->add('Team', '/team', fn (Section $section) =>
-            $section->addIf(true, 'Switch', 'team/switch'));
+        $section->addIf(true, 'Switch', 'team/switch'));
         $this->assertNotEquals($before, $this->navigation);
+    }
+
+    public function test_attributes_can_be_configured_inline_add()
+    {
+        $this->navigation->add('Team', '/team', attributes: ['baa' => 'foo']);
+
+        $tree = $this->navigation->tree();
+
+        $last_item = end($tree);
+
+        $this->assertEquals($last_item['attributes'], ['baa' => 'foo']);
+    }
+
+    public function test_attributes_can_be_configured_inline_add_if()
+    {
+        $this->navigation->addIf(true, 'Team', '/team', attributes: ['baa' => 'foo']);
+
+        $tree = $this->navigation->tree();
+
+        $last_item = end($tree);
+
+        $this->assertEquals($last_item['attributes'], ['baa' => 'foo']);
     }
 }

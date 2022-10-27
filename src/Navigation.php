@@ -29,9 +29,9 @@ class Navigation implements Node
         return app(static::class);
     }
 
-    public function add(string $title = '', string $url = '', ?callable $configure = null): self
+    public function add(string $title = '', string $url = '', ?callable $configure = null, ?array $attributes = null,): self
     {
-        $section = new Section($this, $title, $url);
+        $section = new Section($this, $title, $url, $attributes);
 
         if ($configure) {
             $configure($section);
@@ -42,10 +42,10 @@ class Navigation implements Node
         return $this;
     }
 
-    public function addIf($condition, string $title = '', string $url = '', ?callable $configure = null): self
+    public function addIf($condition, string $title = '', string $url = '',  ?callable $configure = null, ?array $attributes = null): self
     {
         if ($this->resolveCondition($condition)) {
-            $this->add($title, $url, $configure);
+            $this->add($title, $url, $configure, $attributes);
         }
 
         return $this;
@@ -55,7 +55,7 @@ class Navigation implements Node
     {
         $activeSection = $this->activeSection();
 
-        if (! $activeSection) {
+        if (!$activeSection) {
             return false;
         }
 
