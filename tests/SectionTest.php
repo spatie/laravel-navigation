@@ -11,7 +11,7 @@ beforeEach(function () {
 it('has a title', function () {
     $section = new Section($this->navigation, 'Hello, world!');
 
-    expect($section)->toEqual('Hello, world!');
+    expect($section->title)->toEqual('Hello, world!');
 });
 
 it('has an url', function () {
