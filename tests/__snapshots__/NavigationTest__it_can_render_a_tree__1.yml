@@ -1,0 +1,14 @@
+-
+    url: /
+    title: Home
+    active: false
+    attributes: {  }
+    children: {  }
+    depth: 0
+-
+    url: /posts
+    title: Blog
+    active: true
+    attributes: {  }
+    children: [{ url: /posts, title: 'All posts', active: false, attributes: {  }, children: {  }, depth: 1 }, { url: /topics, title: Topics, active: true, attributes: {  }, children: {  }, depth: 1 }]
+    depth: 0
