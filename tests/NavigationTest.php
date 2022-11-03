@@ -1,9 +1,10 @@
 <?php
 
-use function Spatie\Snapshots\assertMatchesSnapshot;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Navigation;
 use Spatie\Navigation\Section;
+
+use function Spatie\Snapshots\assertMatchesSnapshot;
 
 beforeEach(function () {
     $this->activeUrlChecker = new ActiveUrlChecker('/topics/laravel', '/');
