@@ -19,11 +19,11 @@ it('can replace first occurence')
 it('can ensure left')
     ->expect([
         Str::ensureLeft('/', 'url'),
-        Str::ensureLeft('/', '/url')
+        Str::ensureLeft('/', '/url'),
     ])->each->toBe('/url');
 
 it('can ensure right')
     ->expect([
         Str::ensureRight('/', 'url'),
-        Str::ensureRight('/', 'url/')
+        Str::ensureRight('/', 'url/'),
     ])->each->toBe('url/');
