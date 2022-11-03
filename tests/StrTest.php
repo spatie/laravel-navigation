@@ -1,46 +1,29 @@
 <?php
 
-namespace Spatie\Navigation\Tests;
-
-use Orchestra\Testbench\TestCase;
 use Spatie\Navigation\Helpers\Str;
 
-class StrTest extends TestCase
-{
-    /** @test * */
-    public function it_can_check_if_string_starts_with()
-    {
-        $this->assertTrue(Str::startsWith('startEnd', 'start'));
-        $this->assertFalse(Str::startsWith('startEnd', 'end'));
-        $this->assertFalse(Str::startsWith('/', '/foo'));
-        $this->assertTrue(Str::startsWith('/foo', '/'));
-    }
+it('can check if string starts with')
+    ->expect(Str::startsWith('startEnd', 'start'))->toBeTrue()
+    ->and(Str::startsWith('startEnd', 'end'))->toBeFalse()
+    ->and(Str::startsWith('/', '/foo'))->toBeFalse()
+    ->and(Str::startsWith('/foo', '/'))->toBeTrue();
 
-    /** @test * */
-    public function it_can_remove_from_start()
-    {
-        $this->assertSame('End', Str::removeFromStart('start', 'startEnd'));
-        $this->assertSame('endEnd', Str::removeFromStart('start', 'endEnd'));
-    }
+it('can remove from start')
+    ->expect(Str::removeFromStart('start', 'startEnd'))->toBe('End')
+    ->and(Str::removeFromStart('start', 'endEnd'))->toBe('endEnd');
 
-    /** @test * */
-    public function it_can_replace_first_occurence()
-    {
-        $this->assertSame('startEnd', Str::replaceFirst('start', '', 'startstartEnd'));
-        $this->assertSame('endEnd', Str::replaceFirst('start', '', 'endEnd'));
-    }
+it('can replace first occurence')
+    ->expect(Str::replaceFirst('start', '', 'startstartEnd'))->toBe('startEnd')
+    ->expect(Str::replaceFirst('start', '', 'endEnd'))->toBe('endEnd');
 
-    /** @test * */
-    public function it_can_ensure_left()
-    {
-        $this->assertSame('/url', Str::ensureLeft('/', 'url'));
-        $this->assertSame('/url', Str::ensureLeft('/', '/url'));
-    }
+it('can ensure left')
+    ->expect([
+        Str::ensureLeft('/', 'url'),
+        Str::ensureLeft('/', '/url'),
+    ])->each->toBe('/url');
 
-    /** @test * */
-    public function it_can_ensure_right()
-    {
-        $this->assertSame('url/', Str::ensureRight('/', 'url'));
-        $this->assertSame('url/', Str::ensureRight('/', 'url/'));
-    }
-}
+it('can ensure right')
+    ->expect([
+        Str::ensureRight('/', 'url'),
+        Str::ensureRight('/', 'url/'),
+    ])->each->toBe('url/');

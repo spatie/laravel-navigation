@@ -1,77 +1,60 @@
 <?php
 
-namespace Spatie\Navigation\Test;
-
-use PHPUnit\Framework\TestCase;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Navigation;
 use Spatie\Navigation\Section;
 
-class SectionTest extends TestCase
-{
-    private Navigation $navigation;
+beforeEach(function () {
+    $this->navigation = new Navigation(new ActiveUrlChecker('/', '/'));
+});
 
-    public function setUp(): void
-    {
-        $this->navigation = new Navigation(new ActiveUrlChecker('/', '/'));
-    }
+it('has a title')
+    ->tap(fn () => $this->section = new Section($this->navigation, 'Hello, world!'))
+    ->expect(fn () => $this->section->title)
+    ->toEqual('Hello, world!');
 
-    public function test_it_has_a_title()
-    {
-        $section = new Section($this->navigation, 'Hello, world!');
+it('has an url')
+    ->tap(fn () => $this->section = new Section($this->navigation, 'Hello, world!', '/'))
+    ->expect(fn () => $this->section->url)
+    ->toEqual('/');
 
-        $this->assertEquals('Hello, world!', $section->title);
-    }
+it('can have additional attributes')
+    ->tap(
+        fn () =>
+        $this->section = (new Section($this->navigation, 'Hello, world!', '/'))
+            ->attributes(['foo' => 'bar'])
+    )
+    ->expect(fn () => $this->section->attributes)->toHaveKey('foo')
+    ->and(fn () => $this->section->attributes['foo'])->toEqual('bar');
 
-    public function test_it_has_a_url()
-    {
-        $section = new Section($this->navigation, 'Hello, world!', '/');
+it('can have children')
+    ->tap(fn () => $this->section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts'))
+    ->expect(fn () => $this->section->children)->toHaveCount(1)
+    ->and(fn () => $this->section->children[0]->title)->toEqual('Blog')
+    ->and(fn () => $this->section->children[0]->url)->toEqual('/posts');
 
-        $this->assertEquals('/', $section->url);
-    }
+it('can configure children')
+    ->tap(
+        fn () => $this->section = (new Section($this->navigation, 'Hello, world!', '/'))
+            ->add('Blog', '/posts', fn (Section $section) => $section->attributes(['baz' => 'qux']))
+    )
+    ->expect(fn () => $this->section->children)->toHaveCount(1)
+    ->and(fn () => $this->section->children[0]->attributes)->toHaveCount(1)
+    ->and(fn () => $this->section->children[0]->attributes)->toHaveKey('baz')
+    ->and(fn () => $this->section->children[0]->attributes['baz'])->toEqual('qux');
 
-    public function test_it_can_have_additional_attributes()
-    {
-        $section = (new Section($this->navigation, 'Hello, world!', '/'))->attributes(['foo' => 'bar']);
+test('attributes can be configured inline')
+    ->tap(
+        fn () => $this->section = (new Section($this->navigation, 'Top level', '/'))
+            ->add('First link', '/link', attributes: ['icon' => 'mdi:link'])
+    )
+    ->expect(fn () => $this->section->children)->toHaveCount(1)
+    ->and(fn () => $this->section->children[0]->attributes)->toHaveKey('icon');
 
-        $this->assertArrayHasKey('foo', $section->attributes);
-        $this->assertEquals('bar', $section->attributes['foo']);
-    }
-
-    public function test_it_can_have_children()
-    {
-        $section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts');
-
-        $this->assertCount(1, $section->children);
-        $this->assertEquals('Blog', $section->children[0]->title);
-        $this->assertEquals('/posts', $section->children[0]->url);
-    }
-
-    public function test_it_can_configure_children()
-    {
-        $section = (new Section($this->navigation, 'Hello, world!', '/'))
-            ->add('Blog', '/posts', fn (Section $section) => $section->attributes(['baz' => 'qux']));
-
-        $this->assertCount(1, $section->children);
-        $this->assertCount(1, $section->children[0]->attributes);
-        $this->assertArrayHasKey('baz', $section->children[0]->attributes);
-        $this->assertEquals('qux', $section->children[0]->attributes['baz']);
-    }
-
-    public function test_attributes_can_be_configured_inline()
-    {
-        $section = (new Section($this->navigation, 'Top level', '/'))
-            ->add('First link', '/link', attributes: ['icon' => 'mdi:link']);
-
-        $this->assertCount(1, $section->children);
-        $this->assertArrayHasKey('icon', $section->children[0]->attributes);
-    }
-
-    public function test_it_has_depth()
-    {
-        $section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts');
-
-        $this->assertEquals(0, $section->getDepth());
-        $this->assertEquals(1, $section->children[0]->getDepth());
-    }
-}
+it('has depth')
+    ->tap(
+        fn () =>
+        $this->section = (new Section($this->navigation, 'Hello, world!', '/'))->add('Blog', '/posts')
+    )
+    ->expect(fn () => $this->section->getDepth())->toEqual(0)
+    ->and(fn () => $this->section->children[0]->getDepth())->toEqual(1);

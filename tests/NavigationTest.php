@@ -1,100 +1,83 @@
 <?php
 
-namespace Spatie\Navigation\Test;
-
-use PHPUnit\Framework\TestCase;
 use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Navigation;
 use Spatie\Navigation\Section;
-use Spatie\Snapshots\MatchesSnapshots;
 
-class NavigationTest extends TestCase
-{
-    use MatchesSnapshots;
+use function Spatie\Snapshots\assertMatchesSnapshot;
 
-    private ActiveUrlChecker $activeUrlChecker;
+beforeEach(function () {
+    $this->activeUrlChecker = new ActiveUrlChecker('/topics/laravel', '/');
 
-    private Navigation $navigation;
+    $this->navigation = (new Navigation($this->activeUrlChecker))
+        ->add('Home', '/')
+        ->add('Blog', '/posts', function (Section $section) {
+            $section
+                ->add('All posts', '/posts')
+                ->add('Topics', '/topics');
+        });
+});
 
-    public function setUp(): void
-    {
-        $this->activeUrlChecker = new ActiveUrlChecker('/topics/laravel', '/');
+it('can get the active section', function () {
+    $activeSection = $this->navigation->activeSection();
 
-        $this->navigation = (new Navigation($this->activeUrlChecker))
-            ->add('Home', '/')
-            ->add('Blog', '/posts', function (Section $section) {
-                $section
-                    ->add('All posts', '/posts')
-                    ->add('Topics', '/topics');
-            });
-    }
+    expect($activeSection)
+        ->not->toBeNull()
+        ->title->toEqual('Topics');
+});
 
-    public function test_it_can_get_the_active_section()
-    {
-        $activeSection = $this->navigation->activeSection();
+it('can render the active section', function () {
+    assertMatchesSnapshot($this->navigation->current());
+});
 
-        $this->assertNotNull($activeSection);
-        $this->assertEquals('Topics', $activeSection->title);
-    }
+it('returns `null` when rendering an empty section', function () {
+    $navigation = (new Navigation($this->activeUrlChecker))->add('Home', '/');
 
-    public function test_it_can_render_the_active_section()
-    {
-        $this->assertMatchesSnapshot($this->navigation->current());
-    }
+    expect($navigation)
+        ->activeSection()->toBeNull()
+        ->current()->toBeNull();
+});
 
-    public function test_it_returns_null_when_rendering_an_empty_section()
-    {
-        $navigation = (new Navigation($this->activeUrlChecker))->add('Home', '/');
+it('returns `null` when there is no active section', function () {
+    $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();
 
-        $this->assertNull($navigation->activeSection());
-        $this->assertNull($navigation->current());
-    }
+    expect($activeSection)->toBeNull();
+});
 
-    public function test_it_returns_null_when_there_is_no_active_section()
-    {
-        $activeSection = (new Navigation($this->activeUrlChecker))->add('Home', '/')->activeSection();
+it('can render a tree', function () {
+    assertMatchesSnapshot($this->navigation->tree());
+});
 
-        $this->assertNull($activeSection);
-    }
+test("doesn't render hidden items in a tree", function () {
+    assertMatchesSnapshot(
+        $this->navigation
+            ->add('Hidden', '/', fn (Section $section) => $section->hide())
+            ->tree()
+    );
+});
 
-    public function test_it_can_render_a_tree()
-    {
-        $this->assertMatchesSnapshot($this->navigation->tree());
-    }
+it('can render breadcrumbs', function () {
+    assertMatchesSnapshot($this->navigation->breadcrumbs());
+});
 
-    public function test_doesnt_render_hidden_items_in_a_tree()
-    {
-        $this->assertMatchesSnapshot(
-            $this->navigation
-                ->add('Hidden', '/', fn (Section $section) => $section->hide())
-                ->tree()
-        );
-    }
+test('item added with `true` condition', function () {
+    $before = clone $this->navigation;
+    $this->navigation->addIf(true, 'Team', '/team');
 
-    public function test_it_can_render_breadcrumbs()
-    {
-        $this->assertMatchesSnapshot($this->navigation->breadcrumbs());
-    }
+    expect($this->navigation)->not->toEqual($before);
+});
 
-    public function test_item_added_with_true_condition()
-    {
-        $before = clone $this->navigation;
-        $this->navigation->addIf(true, 'Team', '/team');
-        $this->assertNotEquals($before, $this->navigation);
-    }
+test('item not added with `false` condition', function () {
+    $before = clone $this->navigation;
+    $this->navigation->addIf(false, 'Team', '/team');
 
-    public function test_item_not_added_with_false_condition()
-    {
-        $before = clone $this->navigation;
-        $this->navigation->addIf(false, 'Team', '/team');
-        $this->assertEquals($before, $this->navigation);
-    }
+    expect($this->navigation)->toEqual($before);
+});
 
-    public function test_section_added_with_true_condition()
-    {
-        $before = clone $this->navigation;
-        $this->navigation->add('Team', '/team', fn (Section $section) =>
-            $section->addIf(true, 'Switch', 'team/switch'));
-        $this->assertNotEquals($before, $this->navigation);
-    }
-}
+test('section added with `true` condition', function () {
+    $before = clone $this->navigation;
+    $this->navigation->add('Team', '/team', fn (Section $section) =>
+    $section->addIf(true, 'Switch', 'team/switch'));
+
+    expect($this->navigation)->not->toEqual($before);
+});
