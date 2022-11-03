@@ -1,9 +1,5 @@
 <?php
 
-namespace Spatie\Navigation\Tests;
-
-use Orchestra\Testbench\TestCase;
-use Pest\Expectation;
 use Spatie\Navigation\Helpers\Str;
 
 it('can check if string starts with')
