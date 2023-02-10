@@ -2,11 +2,16 @@
 
 All notable changes to `laravel-navigation` will be documented in this file
 
+## 1.2.1 - 2023-02-10
+
+- Add support for Laravel 10
+- Add support for PHP 8.2
+
 ## 1.2.0 - 2022-10-18
 
 ## What's Changed
 
-* feat: support rendering the current section by @innocenzi in https://github.com/spatie/laravel-navigation/pull/13
+- feat: support rendering the current section by @innocenzi in https://github.com/spatie/laravel-navigation/pull/13
 
 **Full Changelog**: https://github.com/spatie/laravel-navigation/compare/1.1.1...1.2.0
 
