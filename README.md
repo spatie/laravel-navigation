@@ -42,23 +42,27 @@ Navigation::make()->tree();
 
 ```json
 [
-    { "title": "Home", "url": "/", "active": false, "children": [] },
+    { "title": "Home", "url": "/", "active": false, "attributes": [], "children": [], "depth": 0 },
     {
         "title": "Blog",
         "url": "/blog",
         "active": false,
+        "attributes": [],
         "children": [
-            { "title": "All posts", "url": "/blog", "active": false, "children": [] },
-            { "title": "Topics", "url": "/blog/topics", "active": true, "children": [] }
-        ]
+            { "title": "All posts", "url": "/blog", "active": false, "attributes": [], "children": [], "depth": 1 },
+            { "title": "Topics", "url": "/blog/topics", "active": true, "attributes": [], "children": [], "depth": 1 }
+        ],
+        "depth": 0
     },
     {
         "title": "Admin",
         "url": "/admin",
         "active": false,
+        "attributes": [],
         "children": [
-            { "title": "Create post", "url": "/blog/create", "active": false, "children": [] }
-        ]
+            { "title": "Create post", "url": "/blog/create", "active": false, "attributes": [], "children": [], "depth": 1 }
+        ],
+        "depth": 0
     }
 ]
 ```
@@ -73,9 +77,9 @@ Navigation::make()->breadcrumbs();
 
 ```json
 [
-    { "title": "Blog", "url": "/blog" },
-    { "title": "Topics", "url": "/blog/topics" },
-    { "title": "Laravel", "url": "/blog/topics/laravel" }
+    { "title": "Blog", "url": "/blog", "attributes": [] },
+    { "title": "Topics", "url": "/blog/topics", "attributes": [] },
+    { "title": "Laravel", "url": "/blog/topics/laravel", "attributes": [] }
 ]
 ```
 
