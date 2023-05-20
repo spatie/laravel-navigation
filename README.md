@@ -21,9 +21,14 @@ Navigation::make()
             ->add('All posts', route('blog.index'))
             ->add('Topics', route('blog.topics.index'));
     })
-    ->addIf(Auth::user()->isAdmin(), function (Navigation $navigation) {
-        $navigation->add('Admin', route('admin.index'));
-    });
+    ->addIf(
+        Auth::user()->isAdmin(),
+        'Admin',
+        route('admin.index'),
+        function (Section $section) {
+            $section->add('Create post', route('blog.create'));
+        }
+    );
 ```
 
 A navigation object can be rendered to a tree, or to breadcrumbs.
@@ -45,9 +50,16 @@ Navigation::make()->tree();
         "children": [
             { "title": "All posts", "url": "/blog", "active": false, "children": [] },
             { "title": "Topics", "url": "/blog/topics", "active": true, "children": [] }
-        ],
+        ]
     },
-    { "title": "Admin", "url": "/admin", "active": false, "children": [] }
+    {
+        "title": "Admin",
+        "url": "/admin",
+        "active": false,
+        "children": [
+            { "title": "Create post", "url": "/blog/create", "active": false, "children": [] }
+        ]
+    }
 ]
 ```
 
