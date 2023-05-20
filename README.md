@@ -16,18 +16,15 @@ The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigatio
 
 Navigation::make()
     ->add('Home', route('home'))
-    ->add('Blog', route('blog.index'), function (Section $section) {
-        $section
-            ->add('All posts', route('blog.index'))
-            ->add('Topics', route('blog.topics.index'));
-    })
+    ->add('Blog', route('blog.index'), fn (Section $section) => $section
+        ->add('All posts', route('blog.index'))
+        ->add('Topics', route('blog.topics.index'))
+    )
     ->addIf(
         Auth::user()->isAdmin(),
         'Admin',
         route('admin.index'),
-        function (Section $section) {
-            $section->add('Create post', route('blog.create'));
-        }
+        fn (Section $section) => $section->add('Create post', route('blog.create'))
     );
 ```
 
