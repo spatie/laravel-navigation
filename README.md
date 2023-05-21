@@ -16,14 +16,16 @@ The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigatio
 
 Navigation::make()
     ->add('Home', route('home'))
-    ->add('Blog', route('blog.index'), function (Section $section) {
-        $section
-            ->add('All posts', route('blog.index'))
-            ->add('Topics', route('blog.topics.index'));
-    })
-    ->addIf(Auth::user()->isAdmin(), function (Navigation $navigation) {
-        $navigation->add('Admin', route('admin.index'));
-    });
+    ->add('Blog', route('blog.index'), fn (Section $section) => $section
+        ->add('All posts', route('blog.index'))
+        ->add('Topics', route('blog.topics.index'))
+    )
+    ->addIf(
+        Auth::user()->isAdmin(),
+        'Admin',
+        route('admin.index'),
+        fn (Section $section) => $section->add('Create post', route('blog.create'))
+    );
 ```
 
 A navigation object can be rendered to a tree, or to breadcrumbs.
@@ -37,17 +39,28 @@ Navigation::make()->tree();
 
 ```json
 [
-    { "title": "Home", "url": "/", "active": false, "children": [] },
+    { "title": "Home", "url": "/", "active": false, "attributes": [], "children": [], "depth": 0 },
     {
         "title": "Blog",
         "url": "/blog",
         "active": false,
+        "attributes": [],
         "children": [
-            { "title": "All posts", "url": "/blog", "active": false, "children": [] },
-            { "title": "Topics", "url": "/blog/topics", "active": true, "children": [] }
+            { "title": "All posts", "url": "/blog", "active": false, "attributes": [], "children": [], "depth": 1 },
+            { "title": "Topics", "url": "/blog/topics", "active": true, "attributes": [], "children": [], "depth": 1 }
         ],
+        "depth": 0
     },
-    { "title": "Admin", "url": "/admin", "active": false, "children": [] }
+    {
+        "title": "Admin",
+        "url": "/admin",
+        "active": false,
+        "attributes": [],
+        "children": [
+            { "title": "Create post", "url": "/blog/create", "active": false, "attributes": [], "children": [], "depth": 1 }
+        ],
+        "depth": 0
+    }
 ]
 ```
 
@@ -61,9 +74,9 @@ Navigation::make()->breadcrumbs();
 
 ```json
 [
-    { "title": "Blog", "url": "/blog" },
-    { "title": "Topics", "url": "/blog/topics" },
-    { "title": "Laravel", "url": "/blog/topics/laravel" }
+    { "title": "Blog", "url": "/blog", "attributes": [] },
+    { "title": "Topics", "url": "/blog/topics", "attributes": [] },
+    { "title": "Laravel", "url": "/blog/topics/laravel", "attributes": [] }
 ]
 ```
 
