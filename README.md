@@ -12,8 +12,6 @@ Laravel Navigation is meant to be the spiritual successor of [Laravel Menu](http
 The main goal of Laravel Menu is to build HTML menus from PHP. Laravel Navigation describes an application's navigation tree, which can be used as a base to create navigational elements like menus and breadcrumbs. Laravel Menu has a rich API for HTML generation. Laravel Navigation doesn't do any HTML generation (although we might ship some Blade files in the future). Instead, Laravel Navigation should give you the flexibility to build your own UI without worrying about the complexity of navigation trees and active state. Think of it as a [renderless component](https://adamwathan.me/renderless-components-in-vuejs/).
 
 ```php
-// typically, in a service provider
-
 Navigation::make()
     ->add('Home', route('home'))
     ->add('Blog', route('blog.index'), fn (Section $section) => $section
@@ -26,6 +24,36 @@ Navigation::make()
         route('admin.index'),
         fn (Section $section) => $section->add('Create post', route('blog.create'))
     );
+```
+
+If you want to register your navigation in a service provider, which is recommended, you can use the [Laravel container events](https://laravel.com/docs/10.x/container#container-events) to add items to the navigation.
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Spatie\Navigation\Navigation;
+
+class NavigationServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->resolving(Navigation::class, function (Navigation $navigation): Navigation {
+            return $navigation
+                ->add('Home', route('home'))
+                ->add('Blog', route('blog.index'), fn (Section $section) => $section
+                    ->add('All posts', route('blog.index'))
+                    ->add('Topics', route('blog.topics.index'))
+                )
+                ->addIf(
+                    Auth::user()->isAdmin(),
+                    'Admin',
+                    route('admin.index'),
+                    fn (Section $section) => $section->add('Create post', route('blog.create'))
+                );
+        });
+    }
+}
 ```
 
 A navigation object can be rendered to a tree, or to breadcrumbs.
