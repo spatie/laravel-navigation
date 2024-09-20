@@ -47,11 +47,12 @@ class ActiveUrlChecker
         $itemPath = Str::removeFromStart($rootPath, $itemPath);
         $matchPath = Str::removeFromStart($rootPath, $matchPath);
 
-        // If this url starts with the url we're matching with, it's active.
-        if ($matchPath === $itemPath || Str::startsWith($matchPath, $itemPath)) {
-            return true;
-        }
+        return $this->isActive($matchPath, $itemPath);
+    }
 
-        return false;
+    protected function isActive(string $matchPath, string $itemPath): bool
+    {
+        // If this url starts with the url we're matching with, it's active.
+        return $matchPath === $itemPath || Str::startsWith($matchPath, $itemPath);
     }
 }
