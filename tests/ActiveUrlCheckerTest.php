@@ -15,8 +15,7 @@ it('can check if an url is active', function (string $currentUrl, string $urlToC
 ]);
 
 it('can strictly check if an url is active', function (string $currentUrl, string $urlToCheck, bool $result) {
-    $checker = new class($urlToCheck, '/') extends ActiveUrlChecker
-    {
+    $checker = new class ($urlToCheck, '/') extends ActiveUrlChecker {
         protected function isActive(string $matchPath, string $itemPath): bool
         {
             return $matchPath === $itemPath;
