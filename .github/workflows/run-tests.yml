@@ -17,6 +17,10 @@ jobs:
             testbench: 10.*
           - laravel: 13.*
             testbench: 11.*
+        exclude:
+          # Laravel 12's Testbench/Pest stack cannot resolve on PHP 8.6.
+          - php: '8.6'
+            laravel: 12.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
