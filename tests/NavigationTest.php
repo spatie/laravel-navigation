@@ -4,8 +4,6 @@ use Spatie\Navigation\Helpers\ActiveUrlChecker;
 use Spatie\Navigation\Navigation;
 use Spatie\Navigation\Section;
 
-use function Spatie\Snapshots\assertMatchesSnapshot;
-
 beforeEach(function () {
     $this->activeUrlChecker = new ActiveUrlChecker('/topics/laravel', '/');
 
@@ -27,7 +25,7 @@ it('can get the active section', function () {
 });
 
 it('can render the active section', function () {
-    assertMatchesSnapshot($this->navigation->current());
+    $this->assertMatchesJsonSnapshot($this->navigation->current());
 });
 
 it('returns `null` when rendering an empty section', function () {
@@ -45,11 +43,11 @@ it('returns `null` when there is no active section', function () {
 });
 
 it('can render a tree', function () {
-    assertMatchesSnapshot($this->navigation->tree());
+    $this->assertMatchesJsonSnapshot($this->navigation->tree());
 });
 
 test("doesn't render hidden items in a tree", function () {
-    assertMatchesSnapshot(
+    $this->assertMatchesJsonSnapshot(
         $this->navigation
             ->add('Hidden', '/', fn (Section $section) => $section->hide())
             ->tree()
@@ -57,7 +55,7 @@ test("doesn't render hidden items in a tree", function () {
 });
 
 it('can render breadcrumbs', function () {
-    assertMatchesSnapshot($this->navigation->breadcrumbs());
+    $this->assertMatchesJsonSnapshot($this->navigation->breadcrumbs());
 });
 
 test('item added with `true` condition', function () {
